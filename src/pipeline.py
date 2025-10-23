@@ -1,0 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from .config import *
+from .io_utils import load_example, ensure_dir
+from .viz import show_image, show_mask, scatter_pc
+from .ransac import ransac_plane
+from .masks import clean_mask
+from .components import largest_component
+from .box_measure import box_height, box_length_width
+
+def run(mat_path: str):
+    ensure_dir(OUT_DIR)
+    A, D, PC, valid = load_example(mat_path)
+
+    # 1) 可视化
+    show_image(A, "Amplitude")
+    show_image(D, "Distance")
+    scatter_pc(PC, valid, step=PC_SCATTER_SUBSAMPLE, title="Point Cloud")
+
+    # 2) 地面 RANSAC
+    n_floor, d_floor, floor_mask = ransac_plane(
+        PC, valid, thresh=RANSAC_THRESH, max_iters=RANSAC_MAX_ITERS
+    )
+    floor_mask = clean_mask(floor_mask, MORPH_OPEN_SIZE, MORPH_CLOSE_SIZE)
+    show_mask(floor_mask, "Floor mask (cleaned)")
+
+    # 3) 非地面点（包含盒子等）
+    not_floor = valid & (~floor_mask)
+
+    # 4) 盒子顶面 RANSAC（在非地面点里找主平面；若背景多，可能需要迭代或取第二大平面）
+    n_top, d_top, top_mask_candidates = ransac_plane(
+        PC, not_floor, thresh=RANSAC_THRESH, max_iters=RANSAC_MAX_ITERS
+    )
+    top_mask_candidates = clean_mask(top_mask_candidates, 1, 3)
+
+    # 5) 取最大连通区域作为盒子顶面
+    box_top_mask, _ = largest_component(top_mask_candidates)
+    show_mask(box_top_mask, "Box top (largest component)")
+
+    # 6) 尺寸
+    H = box_height(n_floor, d_floor, n_top, d_top)
+    L, W = box_length_width(PC, box_top_mask)
+
+    print(f"[RESULT] Height: {H:.3f}  Length: {L:.3f}  Width: {W:.3f}")
+    plt.show()
