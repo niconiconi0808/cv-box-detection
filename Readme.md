@@ -35,12 +35,13 @@ The green area corresponds to the detected floor, the red area to the box top, a
 
 
 
+
 ## 2. Limitations and Recognition Errors
 
 Although the proposed RANSAC-based plane detection method works robustly for most datasets, there are still some recognition errors and unstable results, as illustrated below.
 
 <p align="center">
-	<img src="C:\Users\LENOVO\Desktop\9ebdd6cf-0fb7-4096-a9d3-1faa578d5cd4.jpg" style="zoom:64%;" />
+	<img src="https://github.com/user-attachments/assets/8f4b09aa-769d-43ab-8e2f-ee3461147246" style="zoom:64%;" />
 </p>
 <p align="center"><b>Figure 2:</b> Example of recognition failure on <code>example3kinect.mat</code>.</p>
 
@@ -68,6 +69,7 @@ As a result, the estimated height collapsed to only **5–6 cm**, while the leng
 
 2. **Fixed global RANSAC threshold** 
    The distance threshold (`0.005 m`) is static and may not adapt well to local noise or small box regions, which makes thin structures less competitive in the model evaluation.
+
 
 
 
