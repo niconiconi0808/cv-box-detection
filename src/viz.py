@@ -4,6 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa
 from scipy import ndimage as ndi
 def show_image(img, title="", cmap="gray"):
     plt.figure()
+    img = np.clip(img, 0.0, 1.0)
     plt.imshow(img, cmap=cmap)
     plt.title(title)
     plt.axis("off")

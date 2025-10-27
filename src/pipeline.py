@@ -7,6 +7,7 @@ from .ransac import ransac_plane
 from .masks import clean_mask
 from .components import largest_component
 from .box_measure import box_height, box_length_width
+from .geometry import point_plane_signed_distance
 
 def run(mat_path: str):
     ensure_dir(OUT_DIR)
@@ -28,10 +29,13 @@ def run(mat_path: str):
     not_floor = valid & (~floor_mask)
 
     # 4) 盒子顶面 RANSAC（在非地面点里找主平面；若背景多，可能需要迭代或取第二大平面）
+    dist_to_floor = np.abs(point_plane_signed_distance(PC, n_floor, d_floor))
+    not_floor = not_floor & (dist_to_floor > 0.05)  # 0.05米 = 5厘米
     n_top, d_top, top_mask_candidates = ransac_plane(
         PC, not_floor, thresh=RANSAC_THRESH, max_iters=RANSAC_MAX_ITERS
     )
     top_mask_candidates = clean_mask(top_mask_candidates, 1, 3)
+
 
     # 5) 取最大连通区域作为盒子顶面
     box_top_mask, _ = largest_component(top_mask_candidates)
