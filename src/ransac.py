@@ -3,7 +3,7 @@ from .geometry import plane_from_3pts, point_plane_signed_distance
 
 def ransac_plane(PC, valid_mask, thresh=0.01, max_iters=1000, rng=None):
     """
-    在点云上拟合主平面（RANSAC 自实现，不使用 sklearn）。
+    在点云上拟合主平面
     返回: n, d, inlier_mask
     """
     if rng is None:
@@ -37,8 +37,8 @@ def ransac_plane(PC, valid_mask, thresh=0.01, max_iters=1000, rng=None):
             best_inliers = inliers
             best_model = (n, d)
 
-        # 可选提前停止：如果几乎所有有效点都是内点可提前结束
-        # if count > 0.9 * vm.sum(): break
+        # 如果几乎所有有效点都是内点可提前结束
+        if count > 0.9 * vm.sum(): break
 
     n, d = best_model
     inlier_mask = best_inliers.reshape(H, W)

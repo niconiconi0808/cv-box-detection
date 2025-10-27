@@ -11,7 +11,6 @@ if __name__ == "__main__":
     if args.mat:
         files = [args.mat]
     else:
-        # 这里按你的命名做通配
         files = sorted(glob.glob(os.path.join(args.data_dir, "example*kinect.mat")))
 
     if not files:

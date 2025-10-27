@@ -13,7 +13,7 @@ def load_example(mat_path: str):
     distances = next((k for k in keys if k.startswith("distances")), None)
     cloud = next((k for k in keys if k.startswith("cloud")), None)
 
-    # 按文件里的实际键名取
+    # real name
     A  = data[amplitudes]   # (424, 512) uint16
     D  = data[distances]    # (424, 512) float64
     PC = data[cloud]        # (424, 512, 3) float64
