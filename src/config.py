@@ -2,7 +2,7 @@ DATA_DIR = "data"
 OUT_DIR = "outputs"
 
 # RANSAC 参数
-RANSAC_THRESH = 0.01      # 点到平面的距离阈值
+RANSAC_THRESH = 0.005      # 点到平面的距离阈值
 RANSAC_MAX_ITERS = 1000
 
 # 形态学参数
