@@ -1,7 +1,7 @@
 # Report of Box Detection
 
 ### Author: Zhiyi Tang, Yifei Li
-**Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU) ** 
+**Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)** 
 
 **Date: October 2025**
 
