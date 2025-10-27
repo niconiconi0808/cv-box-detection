@@ -15,10 +15,10 @@ To better illustrate the detection results of floor and box planes, Figure 1 sho
 The green area corresponds to the detected floor, the red area to the box top, and the blue regions represent remaining background points.
 
 <p float="left">
-  <img src="D:\PycharmProjects\cv-box-detection\outputs\myplot1.png" width="44%" />
-  <img src="D:\PycharmProjects\cv-box-detection\outputs\myplot2.png" width="44%" />
-  <img src="D:\PycharmProjects\cv-box-detection\outputs\myplot3.png" width="44%" />
-  <img src="D:\PycharmProjects\cv-box-detection\outputs\myplot4.png" width="44%" />
+  <img src="outputs\myplot1.png" width="44%" />
+  <img src="outputs\myplot2.png" width="44%" />
+  <img src="outputs\myplot3.png" width="44%" />
+  <img src="outputs\myplot4.png" width="44%" />
 </p>
 <p align="center"><b>Figure 1:</b> Visualization of detected planes (top: datasets 1–2; bottom: datasets 3–4).</p>
 
