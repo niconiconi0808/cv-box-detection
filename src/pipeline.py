@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from .config import *
 from .io_utils import load_example, ensure_dir
-from .viz import show_image, show_mask, scatter_pc
+from .viz import show_image, show_mask, scatter_pc, visualize_box_scene
 from .ransac import ransac_plane
 from .masks import clean_mask
 from .components import largest_component
@@ -40,6 +40,9 @@ def run(mat_path: str):
     # 6) 尺寸
     H = box_height(n_floor, d_floor, n_top, d_top)
     L, W = box_length_width(PC, box_top_mask)
+
+    # 7)最终可视化
+    visualize_box_scene(D, floor_mask, box_top_mask, valid_mask=valid)
 
     print(f"[RESULT] Height: {H:.3f}  Length: {L:.3f}  Width: {W:.3f}")
     plt.show()
