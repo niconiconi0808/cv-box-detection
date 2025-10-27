@@ -35,10 +35,6 @@ def _looks_like_D(arr):
 def _looks_like_PC(arr):
     return arr.ndim == 3 and arr.shape[-1] == 3
 
-# 常见别名（全部小写比较）
-_A_ALIASES = {"a","amp","amplitude","toa","tofamp"}
-_D_ALIASES = {"d","depth","dist","distance","range","z","kinectdepth"}
-_PC_ALIASES = {"pc","pointcloud","points","xyz","cloud","xyzmap"}
 
 def load_example(mat_path: str):
     """
@@ -52,13 +48,7 @@ def load_example(mat_path: str):
     m = _unwrap_mat_struct(m)
     arrays = _collect_arrays(m)
 
-    # 先尝试按名字匹配
     A = D = PC = None
-    for k, arr in arrays.items():
-        lk = k.split(".")[-1].lower()
-        if A is None and lk in _A_ALIASES and _looks_like_A(arr): A = arr
-        if D is None and lk in _D_ALIASES and _looks_like_D(arr): D = arr
-        if PC is None and lk in _PC_ALIASES and _looks_like_PC(arr): PC = arr
 
     # 再按形状猜（防止名字完全对不上）
     if PC is None:
@@ -113,6 +103,7 @@ def load_example(mat_path: str):
     # 有些数据集的 invalid 会是 0 或 NaN，这里都处理
     valid_mask = np.isfinite(PC[...,2]) & (PC[...,2] != 0)
     return A, D, PC, valid_mask
+
 
 def ensure_dir(path: str):
     Path(path).mkdir(parents=True, exist_ok=True)
